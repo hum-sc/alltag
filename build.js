@@ -174,6 +174,28 @@ function build() {
 
   console.log(`Posts: ${built} built, ${skipped} skipped (unchanged).`);
 
+  // ── Images (incremental copy) ─────────────────────────────────────────────
+  // Authors place images in content/{author}/images/. Copy them to
+  // dist/{author}/images/ so that relative src="images/…" refs in posts work.
+  for (const author of authors) {
+    const srcImgDir  = path.join(CONTENT, author, 'images');
+    const distImgDir = path.join(DIST, author, 'images');
+    if (!fs.existsSync(srcImgDir)) continue;
+
+    fs.mkdirSync(distImgDir, { recursive: true });
+
+    for (const imgFile of fs.readdirSync(srcImgDir)) {
+      const srcFile  = path.join(srcImgDir, imgFile);
+      const destFile = path.join(distImgDir, imgFile);
+      // Only copy if: full rebuild, file missing from dist, or changed in this push
+      const imgRelPath = `content/${author}/images/${imgFile}`;
+      if (changed === null || !fs.existsSync(destFile) || changed.has(imgRelPath)) {
+        fs.copyFileSync(srcFile, destFile);
+        console.log(`  Copied image: dist/${author}/images/${imgFile}`);
+      }
+    }
+  }
+
   // ── search.json (always) ─────────────────────────────────────────────────
   const searchData = posts.map(p => ({
     title:  p.title,
