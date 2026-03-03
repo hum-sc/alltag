@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alltag — A Blog for Everyday Thoughts</title>
+<title>Helloworld — Alltag</title>
 <style>
 /* =====================================================
    Alltag Blog — "Old Internet" Stylesheet
@@ -269,39 +269,31 @@ hr {
 
   <div id="navbar">
     <a href="/">&#8962; Home</a>
+    <a href="/humbesc/">&#9998; humbesc</a>
   </div>
 
   <div id="main">
+    <h1 style="font-family:'Courier New',Courier,monospace;font-size:1.3em;margin:0 0 10px 0;">Helloworld</h1>
 
-    <!-- Search bar -->
-    <div id="search-box">
-      <label for="search-input">&#128270; Search:</label>
-      <input type="text" id="search-input" placeholder="title, author, date..." autocomplete="off">
-      <div id="search-results"></div>
+    <div id="post-meta">
+      &#128197; <strong>Date:</strong> 02/03/2026 &nbsp;|&nbsp;
+      &#9998; <strong>Author:</strong> <a href="/humbesc/">humbesc</a>
     </div>
 
     <hr>
 
-    <!-- Latest 10 posts -->
-    <div class="section">
-      <div class="section-title">&#9889; The Latest 10</div>
-      <div class="section-body">
-        <ul><li><a href="/humbesc/02-03-2026-helloworld.html">02/03/2026 &mdash; <strong>Helloworld</strong></a> &nbsp;<em>by <a href="/humbesc/">humbesc</a></em></li></ul>
-      </div>
+    <div id="post-content">
+      <h1>Hola</h1>
+<p>Esto es una prueba.</p>
+
     </div>
 
     <hr>
 
-    <!-- Author directory -->
-    <div class="section">
-      <div class="section-title">&#128100; Author Directory</div>
-      <div class="section-body">
-        <div class="author-section">
-  <h3><a href="/humbesc/">humbesc</a></h3>
-  <ul><li><a href="/humbesc/02-03-2026-helloworld.html">02/03/2026 &mdash; Helloworld</a></li></ul>
-</div>
-      </div>
-    </div>
+    <p style="font-family:'Courier New',Courier,monospace;font-size:0.8em;">
+      &laquo; <a href="/humbesc/">Back to humbesc's page</a> &nbsp;|&nbsp;
+      <a href="/">&#8962; Home</a>
+    </p>
 
   </div><!-- #main -->
 
@@ -311,65 +303,5 @@ hr {
   </div>
 
 </div><!-- #page -->
-
-<script>
-// Web 1.0 style client-side search using search.json
-(function () {
-  var input = document.getElementById('search-input');
-  var results = document.getElementById('search-results');
-  var data = null;
-
-  function load(cb) {
-    if (data !== null) { cb(); return; }
-    var req = new XMLHttpRequest();
-    req.open('GET', '/search.json', true);
-    req.onreadystatechange = function () {
-      if (req.readyState === 4) {
-        if (req.status === 200) {
-          try { data = JSON.parse(req.responseText); } catch (e) { data = []; }
-        } else {
-          data = [];
-        }
-        cb();
-      }
-    };
-    req.send();
-  }
-
-  function search(q) {
-    if (!q) { results.innerHTML = ''; return; }
-    q = q.toLowerCase();
-    var matches = data.filter(function (p) {
-      return (p.title && p.title.toLowerCase().indexOf(q) !== -1) ||
-             (p.author && p.author.toLowerCase().indexOf(q) !== -1) ||
-             (p.date && p.date.indexOf(q) !== -1);
-    });
-    if (matches.length === 0) {
-      results.innerHTML = '<em>No results found.</em>';
-      return;
-    }
-    var html = '<ul>';
-    for (var i = 0; i < matches.length; i++) {
-      var p = matches[i];
-      html += '<li><a href="' + p.url + '">' + p.date + ' &mdash; ' +
-              escHtml(p.title) + '</a> <em>by ' + escHtml(p.author) + '</em></li>';
-    }
-    html += '</ul>';
-    results.innerHTML = html;
-  }
-
-  function escHtml(s) {
-    return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  input.addEventListener('input', function () {
-    load(function () { search(input.value.trim()); });
-  });
-}());
-</script>
 </body>
 </html>
