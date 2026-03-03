@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thoughts On The Web — Alltag</title>
+<style>
+/* =====================================================
+   Alltag Blog — "Old Internet" Stylesheet
+   ===================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background-color: #6688aa;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(0,0,0,.05) 4px,
+    rgba(0,0,0,.05) 8px
+  );
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  color: #000;
+  margin: 0;
+  padding: 12px;
+}
+
+/* ---------- Page wrapper ---------- */
+#page {
+  max-width: 860px;
+  margin: 0 auto;
+  background: #d4d0c8;
+  border: 3px outset #ffffff;
+}
+
+/* ---------- Site banner ---------- */
+#banner {
+  background: navy;
+  color: #ffff00;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.6em;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 10px 16px;
+  border-bottom: 3px outset #ffffff;
+  text-shadow: 2px 2px #000033;
+}
+
+#banner a {
+  color: #ffff00;
+  text-decoration: none;
+}
+
+#banner a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Navigation bar ---------- */
+#navbar {
+  background: #000080;
+  padding: 4px 16px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.85em;
+  border-bottom: 3px inset #aaaaaa;
+}
+
+#navbar a {
+  color: #00ffff;
+  text-decoration: none;
+  margin-right: 18px;
+}
+
+#navbar a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* ---------- Main content area ---------- */
+#main {
+  padding: 14px 20px;
+}
+
+/* ---------- Search bar ---------- */
+#search-box {
+  background: #ffffff;
+  border: 2px inset #888888;
+  padding: 10px;
+  margin-bottom: 14px;
+}
+
+#search-box label {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+#search-input {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9em;
+  padding: 3px 6px;
+  width: 280px;
+  border: 2px inset #aaaaaa;
+  background: #ffffcc;
+  margin-left: 6px;
+}
+
+#search-results {
+  margin-top: 8px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.85em;
+}
+
+#search-results ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+
+#search-results li {
+  margin: 3px 0;
+}
+
+/* ---------- Section boxes ---------- */
+.section {
+  border: 3px outset #ffffff;
+  background: #ececec;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  background: #000080;
+  color: #ffffff;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95em;
+  font-weight: bold;
+  padding: 4px 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.section-body {
+  padding: 10px 14px;
+}
+
+/* ---------- Author directory ---------- */
+.author-section {
+  border: 2px inset #888888;
+  background: #f5f5f5;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+}
+
+.author-section h3 {
+  margin: 0 0 6px 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+}
+
+/* ---------- Post page ---------- */
+#post-meta {
+  border: 2px inset #aaaaaa;
+  background: #f0f0e0;
+  padding: 8px 12px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.85em;
+  margin-bottom: 14px;
+}
+
+#post-content {
+  background: #ffffff;
+  border: 2px inset #888888;
+  padding: 14px 18px;
+  line-height: 1.6;
+}
+
+#post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 2px inset #aaaaaa;
+  margin: 8px 0;
+}
+
+#post-content h1, #post-content h2, #post-content h3 {
+  font-family: "Courier New", Courier, monospace;
+  border-bottom: 1px solid #aaaaaa;
+  padding-bottom: 3px;
+}
+
+#post-content h1 { font-size: 1.5em; }
+#post-content h2 { font-size: 1.25em; }
+#post-content h3 { font-size: 1.05em; }
+
+#post-content code, #post-content pre {
+  font-family: "Courier New", Courier, monospace;
+  background: #f4f4d0;
+  border: 1px solid #ccccaa;
+  font-size: 0.9em;
+}
+
+#post-content code {
+  padding: 1px 4px;
+}
+
+#post-content pre {
+  padding: 10px;
+  overflow-x: auto;
+}
+
+#post-content pre code {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+#post-content blockquote {
+  border-left: 4px solid #888888;
+  margin-left: 0;
+  padding-left: 14px;
+  color: #444444;
+  font-style: italic;
+}
+
+/* ---------- About Me box ---------- */
+.about-me {
+  border: 3px inset #aaaaaa;
+  background: #eef4ee;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+/* ---------- Lists ---------- */
+ul { margin: 6px 0; padding-left: 22px; }
+li { margin: 4px 0; }
+
+/* ---------- Links ---------- */
+a:link    { color: #0000cc; }
+a:visited { color: #551a8b; }
+a:hover   { color: #cc0000; }
+a:active  { color: #ff0000; }
+
+/* ---------- Footer ---------- */
+#footer {
+  background: #000080;
+  color: #aaaaff;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.75em;
+  text-align: center;
+  padding: 6px;
+  border-top: 3px inset #888888;
+}
+
+hr {
+  border: none;
+  border-top: 2px inset #888888;
+  margin: 12px 0;
+}
+
+</style>
+</head>
+<body>
+<div id="page">
+
+  <div id="banner">
+    <a href="/">&#9733; Alltag</a>
+    <span style="font-size:0.55em;font-weight:normal;margin-left:16px;">a blog for everyday thoughts</span>
+  </div>
+
+  <div id="navbar">
+    <a href="/">&#8962; Home</a>
+    <a href="/bob/">&#9998; bob</a>
+  </div>
+
+  <div id="main">
+    <h1 style="font-family:'Courier New',Courier,monospace;font-size:1.3em;margin:0 0 10px 0;">Thoughts On The Web</h1>
+
+    <div id="post-meta">
+      &#128197; <strong>Date:</strong> 15/06/2024 &nbsp;|&nbsp;
+      &#9998; <strong>Author:</strong> <a href="/bob/">bob</a>
+    </div>
+
+    <hr>
+
+    <div id="post-content">
+      <h1>Thoughts on the Modern Web</h1>
+<p>I&#39;ve been thinking a lot lately about how different the web feels compared to ten years ago.</p>
+<h2>The Weight of Modern Sites</h2>
+<p>Open the browser&#39;s network tab on a typical news article. You&#39;ll see dozens of requests, megabytes of JavaScript, and half a dozen tracking pixels.</p>
+<p>Compare that to a page from 1999:</p>
+<ul>
+<li>Pure HTML</li>
+<li>Maybe a small GIF or two</li>
+<li>A &lt;table&gt; for layout</li>
+<li>Total size: under 50KB</li>
+</ul>
+<p>Those pages loaded in under a second on a dial-up modem. Today&#39;s pages can struggle on broadband.</p>
+<h2>What We Gained</h2>
+<p>I&#39;m not entirely nostalgic. Modern tooling has given us:</p>
+<ul>
+<li>Accessible web apps</li>
+<li>Real-time collaboration</li>
+<li>Responsive design</li>
+</ul>
+<h2>What We Lost</h2>
+<p>But somewhere along the way we also lost:</p>
+<ul>
+<li>The ability to <code>view-source</code> and understand a page</li>
+<li>Reasonable page weights</li>
+<li>Pages that work without JavaScript</li>
+</ul>
+<h2>A Middle Ground</h2>
+<p>Maybe the answer isn&#39;t to go back, but to be more <em>intentional</em>. Not every site needs a full React app. A blog — like this one — works perfectly well as static HTML.</p>
+<hr>
+<p><em>Posted on 15/06/2024 by bob</em></p>
+
+    </div>
+
+    <hr>
+
+    <p style="font-family:'Courier New',Courier,monospace;font-size:0.8em;">
+      &laquo; <a href="/bob/">Back to bob's page</a> &nbsp;|&nbsp;
+      <a href="/">&#8962; Home</a>
+    </p>
+
+  </div><!-- #main -->
+
+  <div id="footer">
+    &copy; Alltag &mdash; Built with <a href="https://github.com/hum-sc/alltag" style="color:#aaaaff;">alltag</a>
+    &mdash; Served from <a href="https://pages.github.com/" style="color:#aaaaff;">GitHub Pages</a>
+  </div>
+
+</div><!-- #page -->
+</body>
+</html>
