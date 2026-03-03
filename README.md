@@ -61,9 +61,9 @@ Place images in `content/your-username/images/` and reference them with a relati
 ![My image](images/my-photo.jpg)
 ```
 
-### Step 4 — Push to main
+### Step 4 — Open a pull request
 
-Commit your new Markdown file and push to `main`. The GitHub Actions workflow will:
+Commit your new Markdown file, push to a **new branch**, and open a pull request targeting `main`. Once the pull request is merged, the GitHub Actions workflow will:
 
 1. Add a date prefix to any undated files.
 2. Build the static site.
@@ -89,7 +89,7 @@ Violations of these rules will result in immediate removal of the content and re
 
 | Branch | Protection |
 |--------|-----------|
-| `main` | Protected — direct pushes allowed only for collaborators; branch **cannot be deleted** |
+| `main` | Protected — **direct pushes are not allowed**; all changes must go through a pull request; branch **cannot be deleted** |
 | `gh-pages` | Protected — managed exclusively by the CI/CD workflow |
 
 ### Requesting deletion of a post or author folder
