@@ -1,0 +1,11 @@
+{
+  "name": "alltag-blog",
+  "version": "1.0.0",
+  "description": "Old Internet themed static blog builder",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "marked": "^17.0.3"
+  }
+}

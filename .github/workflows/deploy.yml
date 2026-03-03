@@ -1,0 +1,53 @@
+name: Build and Deploy Blog
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout source (with enough history for incremental diff) ──────
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      # ── 2. Restore previous build from gh-pages into dist/ ───────────────
+      #    This gives the incremental builder existing post HTML files so it
+      #    can skip posts whose .md source hasn't changed.
+      - name: Restore previous build (gh-pages → dist/)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: dist
+        continue-on-error: true   # branch may not exist yet on first run
+
+      # ── 3. Set up Node.js ─────────────────────────────────────────────────
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ── 4. Install build dependencies ────────────────────────────────────
+      - name: Install dependencies
+        run: npm ci
+
+      # ── 5. Run the incremental build ─────────────────────────────────────
+      - name: Build site
+        run: node build.js
+
+      # ── 6. Deploy dist/ to gh-pages ──────────────────────────────────────
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          commit_message: "deploy: ${{ github.sha }}"

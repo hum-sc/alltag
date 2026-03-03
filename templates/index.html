@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alltag — A Blog for Everyday Thoughts</title>
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+<div id="page">
+
+  <div id="banner">
+    <a href="/">&#9733; Alltag</a>
+    <span style="font-size:0.55em;font-weight:normal;margin-left:16px;">a blog for everyday thoughts</span>
+  </div>
+
+  <div id="navbar">
+    <a href="/">&#8962; Home</a>
+  </div>
+
+  <div id="main">
+
+    <!-- Search bar -->
+    <div id="search-box">
+      <label for="search-input">&#128270; Search:</label>
+      <input type="text" id="search-input" placeholder="title, author, date..." autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+
+    <hr>
+
+    <!-- Latest 10 posts -->
+    <div class="section">
+      <div class="section-title">&#9889; The Latest 10</div>
+      <div class="section-body">
+        {{LATEST}}
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Author directory -->
+    <div class="section">
+      <div class="section-title">&#128100; Author Directory</div>
+      <div class="section-body">
+        {{AUTHORS}}
+      </div>
+    </div>
+
+  </div><!-- #main -->
+
+  <div id="footer">
+    &copy; Alltag &mdash; Built with <a href="https://github.com/hum-sc/alltag" style="color:#aaaaff;">alltag</a>
+    &mdash; Served from <a href="https://pages.github.com/" style="color:#aaaaff;">GitHub Pages</a>
+  </div>
+
+</div><!-- #page -->
+
+<script>
+// Web 1.0 style client-side search using search.json
+(function () {
+  var input = document.getElementById('search-input');
+  var results = document.getElementById('search-results');
+  var data = null;
+
+  function load(cb) {
+    if (data !== null) { cb(); return; }
+    var req = new XMLHttpRequest();
+    req.open('GET', '/search.json', true);
+    req.onreadystatechange = function () {
+      if (req.readyState === 4) {
+        if (req.status === 200) {
+          try { data = JSON.parse(req.responseText); } catch (e) { data = []; }
+        } else {
+          data = [];
+        }
+        cb();
+      }
+    };
+    req.send();
+  }
+
+  function search(q) {
+    if (!q) { results.innerHTML = ''; return; }
+    q = q.toLowerCase();
+    var matches = data.filter(function (p) {
+      return (p.title && p.title.toLowerCase().indexOf(q) !== -1) ||
+             (p.author && p.author.toLowerCase().indexOf(q) !== -1) ||
+             (p.date && p.date.indexOf(q) !== -1);
+    });
+    if (matches.length === 0) {
+      results.innerHTML = '<em>No results found.</em>';
+      return;
+    }
+    var html = '<ul>';
+    for (var i = 0; i < matches.length; i++) {
+      var p = matches[i];
+      html += '<li><a href="' + p.url + '">' + p.date + ' &mdash; ' +
+              escHtml(p.title) + '</a> <em>by ' + escHtml(p.author) + '</em></li>';
+    }
+    html += '</ul>';
+    results.innerHTML = html;
+  }
+
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  input.addEventListener('input', function () {
+    load(function () { search(input.value.trim()); });
+  });
+}());
+</script>
+</body>
+</html>

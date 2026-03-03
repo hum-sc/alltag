@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{AUTHOR}} — Alltag</title>
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+<div id="page">
+
+  <div id="banner">
+    <a href="/">&#9733; Alltag</a>
+    <span style="font-size:0.55em;font-weight:normal;margin-left:16px;">a blog for everyday thoughts</span>
+  </div>
+
+  <div id="navbar">
+    <a href="/">&#8962; Home</a>
+    <a href="/{{AUTHOR}}/">&#9998; {{AUTHOR}}</a>
+  </div>
+
+  <div id="main">
+
+    <h2 style="font-family:'Courier New',Courier,monospace;font-size:1.1em;margin:0 0 10px 0;">
+      &#9998; Author: {{AUTHOR}}
+    </h2>
+
+    {{ABOUT}}
+
+    <div class="section">
+      <div class="section-title">&#128203; Recent Posts</div>
+      <div class="section-body">
+        {{POSTS}}
+      </div>
+    </div>
+
+    <hr>
+    <p style="font-family:'Courier New',Courier,monospace;font-size:0.8em;">
+      &laquo; <a href="/">&#8962; Back to Homepage</a>
+    </p>
+
+  </div><!-- #main -->
+
+  <div id="footer">
+    &copy; Alltag &mdash; Built with <a href="https://github.com/hum-sc/alltag" style="color:#aaaaff;">alltag</a>
+    &mdash; Served from <a href="https://pages.github.com/" style="color:#aaaaff;">GitHub Pages</a>
+  </div>
+
+</div><!-- #page -->
+</body>
+</html>
