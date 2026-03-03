@@ -92,9 +92,9 @@ Violations of these rules will result in immediate removal of the content and re
 | `main` | Protected — direct pushes allowed only for collaborators; branch **cannot be deleted** |
 | `gh-pages` | Protected — managed exclusively by the CI/CD workflow |
 
-### Requesting deletion of the main branch
+### Requesting deletion of a post or author folder
 
-The `main` branch is **permanently protected from deletion**. If you believe a special action is needed that would involve removing or resetting `main`, you must open a [Branch Deletion Request issue](../../issues/new?template=branch-deletion-request.md) explaining the reason. The repository owner will review and act on it.
+Contributors cannot delete files or folders directly (to prevent accidental or unauthorized removal of content). If you want a post or your entire author folder removed, open a [Content Deletion Request issue](../../issues/new?template=content-deletion-request.md) and describe what should be deleted and why. The repository owner will review and carry it out.
 
 ---
 
