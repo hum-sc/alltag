@@ -29,18 +29,44 @@ jobs:
           path: dist
         continue-on-error: true   # branch may not exist yet on first run
 
-      # ── 3. Set up Node.js ─────────────────────────────────────────────────
+      # ── 3. Add date prefix to undated markdown files ────────────────────
+      - name: Add date prefix to undated markdown files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          TODAY=$(date -u +%d-%m-%Y)
+          CHANGED=false
+          for dir in content/*/; do
+            for file in "$dir"*.md; do
+              [ -f "$file" ] || continue
+              basename=$(basename "$file")
+              [ "$basename" = "me.md" ] && continue
+              if ! echo "$basename" | grep -qE '^[0-9]{2}-[0-9]{2}-[0-9]{4}-.+\.md$'; then
+                slug="${basename%.md}"
+                newpath="$(dirname "$file")/${TODAY}-${slug}.md"
+                git mv "$file" "$newpath"
+                echo "Renamed: $file -> $newpath"
+                CHANGED=true
+              fi
+            done
+          done
+          if [ "$CHANGED" = "true" ]; then
+            git commit -m "chore: add date prefix to undated markdown files"
+            git push
+          fi
+
+      # ── 4. Set up Node.js ─────────────────────────────────────────────────
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      # ── 4. Install build dependencies ────────────────────────────────────
+      # ── 5. Install build dependencies ────────────────────────────────────
       - name: Install dependencies
         run: npm ci
 
-      # ── 5. Run the incremental build ─────────────────────────────────────
+      # ── 6. Run the incremental build ─────────────────────────────────────
       - name: Build site
         run: node build.js
 
