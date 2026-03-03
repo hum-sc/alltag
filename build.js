@@ -120,6 +120,45 @@ function render(template, vars) {
   );
 }
 
+// ─── Cleanup — Orphaned Dist Files ───────────────────────────────────────────
+
+/**
+ * Removes dist files/dirs that no longer have a corresponding content source:
+ *   - dist/{author}/ is removed when the author's content directory is gone.
+ *   - dist/{author}/{post}.html is removed when the source .md no longer exists.
+ */
+function cleanOrphanedFiles(posts, authors) {
+  if (!fs.existsSync(DIST)) return;
+
+  // Build a set of valid HTML paths for fast lookup
+  const validHtmlPaths = new Set(posts.map(p => p.htmlPath));
+
+  for (const entry of fs.readdirSync(DIST, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+
+    const author        = entry.name;
+    const authorDistDir = path.join(DIST, author);
+
+    // Author no longer has a content directory → remove entire dist folder
+    if (!authors.includes(author)) {
+      fs.rmSync(authorDistDir, { recursive: true, force: true });
+      console.log(`  Removed orphaned author dir: dist/${author}`);
+      continue;
+    }
+
+    // Remove individual HTML files whose source .md has been deleted
+    for (const file of fs.readdirSync(authorDistDir)) {
+      if (!file.endsWith('.html') || file === 'index.html') continue;
+
+      const htmlPath = path.join(authorDistDir, file);
+      if (!validHtmlPaths.has(htmlPath)) {
+        fs.unlinkSync(htmlPath);
+        console.log(`  Removed orphaned post HTML: dist/${author}/${file}`);
+      }
+    }
+  }
+}
+
 // ─── Build ───────────────────────────────────────────────────────────────────
 
 function build() {
@@ -144,6 +183,9 @@ function build() {
 
   const { posts, authors } = scanContent();
   console.log(`Content: ${posts.length} post(s) across ${authors.length} author(s).`);
+
+  // ── Cleanup orphaned dist files (deleted posts / authors) ────────────────
+  cleanOrphanedFiles(posts, authors);
 
   // ── Individual post pages (incremental) ──────────────────────────────────
   let built = 0, skipped = 0;
